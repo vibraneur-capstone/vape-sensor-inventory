@@ -1,7 +1,31 @@
 # vape-sensor-inventory
 
+## About this micro service
+This micro-service is powered by *Flask* with *connexion* which auto handles all HTTP request mapping       
+For details refer to `swagger.yaml`
+
 ## Setup
-> Dev setup     
+> Install `pip`     
+> Make sure to have python3     
+> that's it
+
+## Running on Local
+>A script is provided to help with dev setup and running     
+>
+>From project root directory, run `./scripts/init_venv.sh` will create a virtual env and install all dependencies  
+>      
+>After virtual env is set up, run `./scripts/run_server.sh` will boot up the server on localhost:8822       
+
+
+## API Endpoints
+*Replace value in { } with real value*
+
+### Get Swagger UI in Browser
+> type in browser `http://localhost:8822/inventory/v1/ui`     
+### Query detail of a sensor
+> GET: `http://localhost:8822/inventory/v1/{organization_name}/machine/{machine_name}/sensors/{sensor_id}` 
+### Query a list of sensors (By default return all status)     
+> GET: `http://localhost:8822/inventory/v1/{organization_name/machine/{machine_name}/sensors?status={ONLINE}`       
 
 ## Update (Dec 5th)
 
@@ -16,8 +40,9 @@ Two endpoints, both `GET`
 
 ## TODO (Dec 5th)
 
-1. Bootstrap Flask (in progress)
-2. Database provision          
+1. ~~Bootstrap Flask (in progress) (Done)~~
+2. Database provision (In progress)         
+3. Team meeting
 
 ## Swagger
 

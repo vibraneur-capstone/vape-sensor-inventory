@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  description: Sensor monitor service for V.A.P.E
+  description: Sensor monitor services for V.A.P.E
   title: V.A.P.E Sensor Inventory
   version: 0.0.1 snapshot
 host: localhost:8822
@@ -9,23 +9,24 @@ schemes:
   - http
   - https
 paths:
-  '/stats/{orgName}/machine/{machineName}/sensors':
+  '/org/{org_name}/machine/{machine_name}/sensors':
     get:
       tags:
         - List all sensors (list all status by default)
       summary: List all sensors
-      operationId: getSensors
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: get_all_sensors
       produces:
         - application/json
 
       parameters:
         - in: path
-          name: orgName
+          name: org_name
           required: true
           type: string
           description: The name of the orgnization owning the machine
         - in: path
-          name: machineName
+          name: machine_name
           required: true
           type: string
           description: The name of the machine
@@ -60,31 +61,32 @@ paths:
           schema:
             $ref: '#/definitions/Exception'
 
-  '/stats/{orgName}/machine/{machineName}/sensors/{id}':
+  '/org/{org_name}/machine/{machine_name}/sensors/{sensor_id}':
     get:
       tags:
         - Query detail of a sensor
       summary: Detail of a sensor
-      operationId: getSensor
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: get_sensor_detail
       produces:
         - application/json
 
       parameters:
         - in: path
-          name: orgName
+          name: org_name
           required: true
           type: string
           description: The name of the orgnization owning the machine
         - in: path
-          name: machineName
+          name: machine_name
           required: true
           type: string
           description: The name of the machine
         - in: path
-          name: id
+          name: sensor_id
           required: true
           type: string
-          description: The status of sensors to include in the response
+          description: The id of the sensor
 
       responses:
         '200':

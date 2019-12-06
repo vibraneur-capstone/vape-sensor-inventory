@@ -1,0 +1,2 @@
+connexion == 2.4.0
+connexion[swagger-ui]
