@@ -1,7 +1,6 @@
 from flask import Flask
 import connexion
 from flask_pymongo import pymongo
-from repositories.connection_string import MONGO_CONNECTION_STRING
 import repositories.db as DB
 
 app = connexion.App(__name__, specification_dir='./')
