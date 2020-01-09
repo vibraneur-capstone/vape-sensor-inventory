@@ -4,6 +4,7 @@ from flask_pymongo import pymongo
 import repositories.db as DB
 
 app = connexion.App(__name__, specification_dir='./')
+app.add_api('swagger.yaml')
 
 #test to insert data to the data base, meant to be removed later
 @app.route("/test")
