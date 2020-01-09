@@ -4,8 +4,6 @@ phases:
   install:
     runtime-versions:
       python: 3.7
-    commands:
-      - echo skipping
 
   pre_build:
     commands:
