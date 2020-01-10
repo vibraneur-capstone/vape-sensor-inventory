@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+
+  pre_build:
+    commands:
+      - echo Running tests
+      - echo skipping tests
+  build:
+    commands:
+      - echo Building...
+      - echo Build started on `date`
+      - ./scripts/build.sh
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - version=0.0.2
+      - artifact_name=sensor-inventory-dist
+      - cp ./"$artifact_name".zip ./$artifact_name-$version.zip
+
+artifacts:
+  files:
+    - $artifact_name*.zip
+  name: vape-sensor-inventory
