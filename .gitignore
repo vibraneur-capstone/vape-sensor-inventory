@@ -12,3 +12,4 @@ __init__.pyc
 dsp-aws-lambda-dist.zip
 external_libraries
 *dist.zip
+.vscode

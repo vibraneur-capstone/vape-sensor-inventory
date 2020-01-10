@@ -23,9 +23,9 @@ For details refer to `swagger.yaml`
 ### Get Swagger UI in Browser
 > type in browser `http://localhost:8822/inventory/v1/ui`     
 ### Query detail of a sensor
-> GET: `http://localhost:8822/inventory/v1/{organization_name}/machine/{machine_name}/sensors/{sensor_id}` 
+> GET: `http://localhost:8822/inventory/v1/org/{organization_name}/machine/{machine_name}/sensors/{sensor_id}` 
 ### Query a list of sensors (By default return all status)     
-> GET: `http://localhost:8822/inventory/v1/{organization_name/machine/{machine_name}/sensors?status={ONLINE}`       
+> GET: `http://localhost:8822/inventory/v1/org/{organization_name/machine/{machine_name}/sensors?status={ONLINE}`       
 
 ## Update (Dec 5th)
 
@@ -41,7 +41,7 @@ Two endpoints, both `GET`
 ## TODO (Dec 5th)
 
 1. ~~Bootstrap Flask (in progress) (Done)~~
-2. Database provision (In progress)         
+2. ~~Database provision (In progress)~~         
 3. Team meeting
 
 ## Swagger
