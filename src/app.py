@@ -7,8 +7,9 @@ app.add_api('swagger.yaml')
 #test to insert data to the data base, meant to be removed later
 @app.route("/test")
 def test():
-    user = models.User(email="connect@derrickmwiti.com", first_name="Derrick", last_name="Mwiti")
-    user.save()
-    return "created a sensor--mongoengine"
+    org = models.Organization(organization_name = "Husky",
+    organization_city = "St. Johns")
+    org.save()
+    return "created a doc using mongoengine"
 if __name__ == '__main__':
     app.run(port=8822)
