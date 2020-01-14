@@ -1,6 +1,6 @@
-from flask_pymongo import pymongo
-from .connection_string import MONGO_CONNECTION_STRING
-from mongoengine import *
-import ssl
+from .mongo_config import MONGO_CONNECTION_STRING, DATABASE_NAME, MONGO_CERT
+from mongoengine import connect
 
-db = connect('db_sensor', host = MONGO_CONNECTION_STRING, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+
+def connect_db():
+    connect(DATABASE_NAME, host=MONGO_CONNECTION_STRING, ssl=True, ssl_cert_reqs=MONGO_CERT)

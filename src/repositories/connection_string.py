@@ -1,1 +1,0 @@
-MONGO_CONNECTION_STRING = "mongodb+srv://db-vape-sensor-inventory:theMostSecurePassword?!@cluster-vape-sensor-inventory-fcfqt.mongodb.net/test?retryWrites=true&w=majority"
