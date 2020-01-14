@@ -17,7 +17,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - version=0.0.2
+      - version=0.0.3
       - artifact_name=sensor-inventory-dist
       - cp ./"$artifact_name".zip ./$artifact_name-$version.zip
 
