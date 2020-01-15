@@ -8,6 +8,7 @@ app.add_api('swagger.yaml')
 app_health = HealthCheck()
 DB.connect_db()
 
+# TODO: override app_health to include mongoDB connection test
 app.add_url_rule("/vapehealthcheck", "vapehealthcheck", view_func=lambda: app_health.run())
 
 
