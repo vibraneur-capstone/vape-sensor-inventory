@@ -13,6 +13,7 @@ app_health = HealthCheck()
 DB.connect_db()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Api health check
 app.add_url_rule("/vapehealthcheck", "vapehealthcheck", view_func=lambda: app_health.run())
 
@@ -49,5 +50,7 @@ def test():
     return sensor.to_json()
 >>>>>>> Implemented API endpoint
 
+=======
+>>>>>>> Added more endpoint to swagger file
 if __name__ == '__main__':
     app.run(port=8822, debug = True)
