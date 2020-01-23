@@ -1,0 +1,199 @@
+swagger: '2.0'
+info:
+  description: Sensor monitor services for V.A.P.E
+  title: V.A.P.E Sensor Inventory
+  version: 0.0.1 snapshot
+host: localhost:8822
+basePath: /inventory/v1
+schemes:
+  - http
+  - https
+paths:
+  '/org/{org_name}/machine/{machine_name}/sensors':
+    get:
+      tags:
+        - List all sensors (list all status by default)
+      summary: List all sensors
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: get_all_sensors
+      produces:
+        - application/json
+
+      parameters:
+        - in: path
+          name: org_name
+          required: true
+          type: string
+          description: The name of the orgnization owning the machine
+        - in: path
+          name: machine_name
+          required: true
+          type: string
+          description: The name of the machine
+        - in: query
+          name: status
+          enum:
+            - ONLINE
+            - DECOMMISSIONED
+            - OFFLINE
+          required: false
+          type: string
+          description: The status of sensors to include in the response
+
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/SensorList'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestException'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Exception'
+        '500':
+          description: Server Error
+          schema:
+            $ref: '#/definitions/Exception'
+
+  '/org/{org_name}/machine/{machine_name}/sensors/{sensor_id}':
+    get:
+      tags:
+        - Query detail of a sensor
+      summary: Detail of a sensor
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: get_sensor_detail
+      produces:
+        - application/json
+
+      parameters:
+        - in: path
+          name: org_name
+          required: true
+          type: string
+          description: The name of the orgnization owning the machine
+        - in: path
+          name: machine_name
+          required: true
+          type: string
+          description: The name of the machine
+        - in: path
+          name: sensor_id
+          required: true
+          type: string
+          description: The id of the sensor
+
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/SensorDetail'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestException'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Exception'
+        '500':
+          description: Server Error
+          schema:
+            $ref: '#/definitions/Exception'
+definitions:
+
+  SensorList:
+    type: object
+    description: A list of sensor summaries
+    properties:
+      sensorList:
+        type: array
+        items:
+          $ref: '#/definitions/SensorSummary'
+      count:
+        type: number
+
+  SensorSummary:
+    type: object
+    description: A snapshot of sensor information
+    properties:
+      id:
+        type: string
+        description: The id of sensor
+      status:
+        $ref: '#/definitions/SensorStatus'
+
+  SensorDetail:
+    type: object
+    description: Details of a sensor
+    allOf: [$ref: '#/definitions/SensorSummary']
+    properties:
+      location:
+        type: string
+        description: Location info of the sensor
+      installDate:
+        type: string
+        description: Installation date
+      machineInfo:
+        description: The machine which this sensor is installed on
+        allOf: [$ref: '#/definitions/MachineSummary']
+
+  MachineSummary:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The id associated with machine
+      location:
+        type: string
+        description: The location
+      name:
+        type: string
+        description: User customized name
+      alertStatus:
+        type: string
+        enum:
+          - ALARM
+          - OK
+          - INSUFFICIENT_DATA
+
+  SensorStatus:
+    type: string
+    description: Describes sensor status
+    enum:
+      - ONLINE
+      - DECOMMISSIONED
+      - OFFLINE
+
+
+  BadRequestException:
+    type: object
+    properties:
+      message:
+        type: integer
+      errorCode:
+        type: string
+        readOnly: false
+    required:
+      - message
+      - errorCode
+  Exception:
+    type: object
+    properties:
+      message:
+        type: integer
+      errorCode:
+        type: string
+        readOnly: false
+    required:
+      - message
+      - errorCode
+
