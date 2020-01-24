@@ -14,6 +14,7 @@ DB.connect_db()
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Api health check
 app.add_url_rule("/vapehealthcheck", "vapehealthcheck", view_func=lambda: app_health.run())
 
@@ -52,6 +53,18 @@ def test():
 
 =======
 >>>>>>> Added more endpoint to swagger file
+=======
+@app.route("/test")
+def test():
+    org = models.Organization(organization_name="Husky",
+                              organization_address="St. Johns")
+    sensor = models.Sensor(sensor_name="test name",
+                           sensor_status=models.SensorStatus.DECOMMISSIONED,
+                           organization=org)
+    sensor.save()
+    # return sensor.to_json()
+
+>>>>>>> update
 if __name__ == '__main__':
     app.run(port=8822, debug = True)
 <<<<<<< HEAD

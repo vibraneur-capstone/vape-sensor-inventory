@@ -103,13 +103,8 @@ paths:
   '/org/{org_name}/machine/{machine_name}/sensors':
     get:
       tags:
-<<<<<<< HEAD
         - List all sensors on a specific machine (list all status by default)
       summary: List sensors on a specific machine
-=======
-        - List all online/offline/disconinued sensors 
-      summary: List all offline sensors
->>>>>>> modified swagger file
       x-swagger-router-controller: controllers.sensor_info_controller
       operationId: get_all_sensors_machine
       produces:
@@ -121,8 +116,6 @@ paths:
           required: true
           type: string
           description: The name of the orgnization owning the machine
-<<<<<<< HEAD
-=======
         - in: query
           name: status
           enum:
@@ -164,7 +157,6 @@ paths:
         - application/json
 
       parameters:
->>>>>>> modified swagger file
         - in: path
           name: machine_name
           required: true
