@@ -12,6 +12,7 @@ app_health = HealthCheck()
 # Mongo connection
 DB.connect_db()
 
+<<<<<<< HEAD
 # Api health check
 app.add_url_rule("/vapehealthcheck", "vapehealthcheck", view_func=lambda: app_health.run())
 
@@ -20,6 +21,8 @@ cors = CORS(app.app)
 
 # test to insert data to the data base, meant to be removed later
 # TODO: remove this... and implement unit test
+=======
+>>>>>>> update
 @app.route("/test")
 def test():
     org = models.Organization(organization_name="Husky",
@@ -28,8 +31,12 @@ def test():
                            sensor_status=models.SensorStatus.DECOMMISSIONED,
                            organization=org)
     sensor.save()
+<<<<<<< HEAD
     return sensor.to_json()
 
+=======
+    # return sensor.to_json()
+>>>>>>> update
 
 if __name__ == '__main__':
     app.run(port=8822, debug = True)
