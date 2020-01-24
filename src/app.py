@@ -32,4 +32,6 @@ def test():
 
 
 if __name__ == '__main__':
-    app.run(port=8822)
+    app.run(port=8822, debug = True)
+
+

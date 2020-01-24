@@ -24,7 +24,6 @@ class Sensor(Document):
     sensor_install_time = DateField(required=False)
     sensor_status = StringField(required=True, max_length=50)
 
-
 class SensorStatus(str, Enum):
     ONLINE = "ONLINE"
     DECOMMISSIONED = "DECOMMISSIONED"

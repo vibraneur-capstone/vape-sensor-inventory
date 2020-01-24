@@ -9,13 +9,50 @@ schemes:
   - http
   - https
 paths:
+  '/org/{org_name}/sensors':
+    get:
+      tags:
+        - List all sensors for a specific organization (list all status by default)
+      summary: List sensors for a specific organization
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: get_all_sensors_org
+      produces:
+        - application/json
+
+      parameters:
+        - in: path
+          name: org_name
+          required: true
+          type: string
+          description: The name of the orgnization owning the machine
+
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/SensorList'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestException'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Exception'
+        '500':
+          description: Server Error
+          schema:
+            $ref: '#/definitions/Exception'
   '/org/{org_name}/machine/{machine_name}/sensors':
     get:
       tags:
         - List all sensors on a specific machine (list all status by default)
       summary: List sensors on a specific machine
       x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_all_sensors
+      operationId: get_all_sensors_machine
       produces:
         - application/json
 
@@ -112,7 +149,7 @@ paths:
     get:
       tags:
         - List all online/offline/disconinued sensors 
-      summary: List all online sensors
+      summary: List all offline sensors
       x-swagger-router-controller: controllers.sensor_info_controller
       operationId: get_offline_sensors
       produces:
@@ -158,7 +195,7 @@ paths:
     get:
       tags:
         - List all online/offline/disconinued sensors  
-      summary: List all online sensors
+      summary: List all discontinued sensors
       x-swagger-router-controller: controllers.sensor_info_controller
       operationId: get_discontinued_sensors
       produces:

@@ -3,3 +3,6 @@ from mongoengine import connect
 
 def connect_db():
     connect(DATABASE_NAME, host=MONGO_CONNECTION_STRING, ssl=True, ssl_cert_reqs=MONGO_CERT)
+
+
+
