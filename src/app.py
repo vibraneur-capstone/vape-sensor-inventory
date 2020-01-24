@@ -54,3 +54,8 @@ def test():
 >>>>>>> Added more endpoint to swagger file
 if __name__ == '__main__':
     app.run(port=8822, debug = True)
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> modified swagger file
