@@ -27,6 +27,7 @@ paths:
           required: true
           type: string
           description: The name of the orgnization owning the machine
+<<<<<<< HEAD
 
       responses:
         '200':
@@ -69,6 +70,8 @@ paths:
           required: true
           type: string
           description: The name of the orgnization owning the machine
+=======
+>>>>>>> Implemented API endpoint
         - in: query
           name: status
           enum:
@@ -116,47 +119,6 @@ paths:
           required: true
           type: string
           description: The name of the orgnization owning the machine
-        - in: query
-          name: status
-          enum:
-            - ONLINE
-            - DECOMMISSIONED
-            - OFFLINE
-          required: false
-          type: string
-          description: The status of sensors to include in the response
-
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/SensorList'
-          headers:
-            Access-Control-Allow-Origin:
-              type: string
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/BadRequestException'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Exception'
-        '500':
-          description: Server Error
-          schema:
-            $ref: '#/definitions/Exception'
-  '/org/{org_name}/sensors/discontinued':
-    get:
-      tags:
-        - List all online/offline/disconinued sensors  
-      summary: List all discontinued sensors
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_discontinued_sensors
-      produces:
-        - application/json
-
-      parameters:
         - in: path
           name: machine_name
           required: true
