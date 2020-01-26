@@ -25,7 +25,16 @@ paths:
           required: true
           type: string
           description: The name of the orgnization owning the machine
-
+        - in: query
+          name: status
+          enum:
+            - ONLINE
+            - DECOMMISSIONED
+            - OFFLINE
+            - ALL
+          required: false
+          type: string
+          description: The status of sensors to include in the response
       responses:
         '200':
           description: Successful operation
@@ -46,6 +55,7 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/Exception'
+
   '/org/{org_name}/machine/{machine_name}/sensors':
     get:
       tags:
@@ -73,6 +83,7 @@ paths:
             - ONLINE
             - DECOMMISSIONED
             - OFFLINE
+            - ALL
           required: false
           type: string
           description: The status of sensors to include in the response
@@ -98,147 +109,6 @@ paths:
           schema:
             $ref: '#/definitions/Exception'
             
-  '/org/{org_name}/sensors/online':
-    get:
-      tags:
-        - List all online/offline/disconinued sensors  
-      summary: List all online sensors
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_online_sensors
-      produces:
-        - application/json
-
-      parameters:
-        - in: path
-          name: org_name
-          required: true
-          type: string
-          description: The name of the orgnization owning the machine
-        - in: query
-          name: status
-          enum:
-            - ONLINE
-            - DECOMMISSIONED
-            - OFFLINE
-          required: false
-          type: string
-          description: The status of sensors to include in the response
-
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/SensorList'
-          headers:
-            Access-Control-Allow-Origin:
-              type: string
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/BadRequestException'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Exception'
-        '500':
-          description: Server Error
-          schema:
-            $ref: '#/definitions/Exception'
-            
-  '/org/{org_name}/sensors/offline':
-    get:
-      tags:
-        - List all online/offline/disconinued sensors 
-      summary: List all offline sensors
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_offline_sensors
-      produces:
-        - application/json
-
-      parameters:
-        - in: path
-          name: org_name
-          required: true
-          type: string
-          description: The name of the orgnization owning the machine
-        - in: query
-          name: status
-          enum:
-            - ONLINE
-            - DECOMMISSIONED
-            - OFFLINE
-          required: false
-          type: string
-          description: The status of sensors to include in the response
-
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/SensorList'
-          headers:
-            Access-Control-Allow-Origin:
-              type: string
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/BadRequestException'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Exception'
-        '500':
-          description: Server Error
-          schema:
-            $ref: '#/definitions/Exception'
-  '/org/{org_name}/sensors/discontinued':
-    get:
-      tags:
-        - List all online/offline/disconinued sensors  
-      summary: List all discontinued sensors
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_discontinued_sensors
-      produces:
-        - application/json
-
-      parameters:
-        - in: path
-          name: org_name
-          required: true
-          type: string
-          description: The name of the orgnization owning the machine
-        - in: query
-          name: status
-          enum:
-            - ONLINE
-            - DECOMMISSIONED
-            - OFFLINE
-          required: false
-          type: string
-          description: The status of sensors to include in the response
-
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/SensorList'
-          headers:
-            Access-Control-Allow-Origin:
-              type: string
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/BadRequestException'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Exception'
-        '500':
-          description: Server Error
-          schema:
-            $ref: '#/definitions/Exception'
-  
-
   '/org/{org_name}/machine/{machine_name}/sensors/{sensor_id}':
     get:
       tags:
@@ -350,8 +220,7 @@ definitions:
       - ONLINE
       - DECOMMISSIONED
       - OFFLINE
-
-
+      - ALL
   BadRequestException:
     type: object
     properties:

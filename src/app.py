@@ -25,20 +25,29 @@ cors = CORS(app.app)
 >>>>>>> update
 @app.route("/test")
 def test():
-    org = models.Organization(organization_name="Husky",
+    org = models.Organization(organization_name="husky",
                               organization_address="St. Johns")
-    sensor = models.Sensor(sensor_name="test name",
-                           sensor_status=models.SensorStatus.DECOMMISSIONED,
-                           organization=org)
+    machine = models.Machine(
+        machine_name = "apple",
+        organization_name = "husky",
+        total_sensor_count = 0
+    )
+    sensor = models.Sensor(
+                            sensor_name="test_6",
+                            sensor_status=models.SensorStatus.ONLINE,
+                            organization=org,
+                            machine=machine)
     sensor.save()
+<<<<<<< HEAD
 <<<<<<< HEAD
     return sensor.to_json()
 
 =======
     # return sensor.to_json()
 >>>>>>> update
+=======
+    return sensor.to_json()
+>>>>>>> Implemented API endpoint
 
 if __name__ == '__main__':
     app.run(port=8822, debug = True)
-
-
