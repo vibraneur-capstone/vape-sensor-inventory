@@ -24,10 +24,11 @@ For details refer to `swagger.yaml`
 > type in browser `http://localhost:8822/inventory/v1/ui`     
 ### Query detail of a sensor
 > GET: `http://localhost:8822/inventory/v1/org/{organization_name}/machine/{machine_name}/sensors/{sensor_id}` 
-### Query a list of sensors (By default return all status)     
-> GET: `http://localhost:8822/inventory/v1/org/{organization_name/machine/{machine_name}/sensors?status={ONLINE}`       
-
-## Update (Dec 5th)
+### Query a list of sensors for a specified machine   
+> GET: `http://localhost:8822/inventory/v1/org/{organization_name/machine/{machine_name}/sensors`
+### Query a list of sensors for a specified organization
+> GET `http://localhost:8822/inventory/v1/org/{organization_name}/sensors?status={sensor_status}`
+## Update (Jan. 26th)
 
 Swagger file created for 1-4 requirements       
 ```
@@ -38,10 +39,10 @@ Swagger file created for 1-4 requirements
 ```
 Two endpoints, both `GET`
 
-## TODO (Dec 5th)
+## TODO (Jan 26th)
 
 1. ~~Bootstrap Flask (in progress) (Done)~~
-2. ~~Database provision (In progress)~~         
+2. ~~Database provision (done)~~         
 3. Team meeting
 
 ## Swagger

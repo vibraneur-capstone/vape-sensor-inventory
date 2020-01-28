@@ -15,17 +15,16 @@ class Machine(EmbeddedDocument):
     location = StringField(required=False)
     total_sensor_count = IntField(required=True, default=0)
 
-
 class Sensor(Document):
-    id = StringField(required=False)
+    sensor_id = StringField(required=False)
     sensor_name = StringField(required=True)
     organization = EmbeddedDocumentField(Organization, required=False)
     machine = EmbeddedDocumentField(Machine, required=False)
     sensor_install_time = DateField(required=False)
     sensor_status = StringField(required=True, max_length=50)
 
-
 class SensorStatus(str, Enum):
     ONLINE = "ONLINE"
     DECOMMISSIONED = "DECOMMISSIONED"
     OFFLINE = "OFFLINE"
+    ALL = "ALL"

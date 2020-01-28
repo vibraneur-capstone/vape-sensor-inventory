@@ -15,7 +15,7 @@ paths:
         - List all sensors (list all status by default)
       summary: List all sensors
       x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_all_sensors
+      operationId: get_all_sensors_machine
       produces:
         - application/json
 
@@ -30,12 +30,50 @@ paths:
           required: true
           type: string
           description: The name of the machine
+
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/SensorList'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestException'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Exception'
+        '500':
+          description: Server Error
+          schema:
+            $ref: '#/definitions/Exception'
+
+  '/org/{org_name}/sensors':
+    get:
+      tags:
+        - List all sensors (list all status by default)
+      summary: List all sensors
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: get_all_sensors
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: org_name
+          required: true
+          type: string
+          description: The name of the orgnization owning the machine
         - in: query
           name: status
           enum:
             - ONLINE
             - DECOMMISSIONED
             - OFFLINE
+            - ALL
           required: false
           type: string
           description: The status of sensors to include in the response
@@ -136,16 +174,16 @@ definitions:
     description: Details of a sensor
     allOf: [$ref: '#/definitions/SensorSummary']
     properties:
-      location:
+      name:
         type: string
-        description: Location info of the sensor
-      installDate:
+        description: Name of the sensor
+      id:
         type: string
-        description: Installation date
+        description: Sensor id
       machineInfo:
         description: The machine which this sensor is installed on
         allOf: [$ref: '#/definitions/MachineSummary']
-
+  
   MachineSummary:
     type: object
     properties:
@@ -172,8 +210,7 @@ definitions:
       - ONLINE
       - DECOMMISSIONED
       - OFFLINE
-
-
+      - ALL
   BadRequestException:
     type: object
     properties:
@@ -196,4 +233,3 @@ definitions:
     required:
       - message
       - errorCode
-
