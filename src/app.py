@@ -12,9 +12,6 @@ app_health = HealthCheck()
 # Mongo connection
 DB.connect_db()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Api health check
 app.add_url_rule("/vapehealthcheck", "vapehealthcheck", view_func=lambda: app_health.run())
 
@@ -23,37 +20,24 @@ cors = CORS(app.app)
 
 # test to insert data to the data base, meant to be removed later
 # TODO: remove this... and implement unit test
-=======
->>>>>>> update
-@app.route("/test")
-def test():
-    org = models.Organization(organization_name="husky",
-                              organization_address="St. Johns")
-    machine = models.Machine(
-        machine_name = "apple",
-        organization_name = "husky",
-        total_sensor_count = 0
-    )
-    sensor = models.Sensor(
-                            sensor_name="test_6",
-                            sensor_status=models.SensorStatus.ONLINE,
-                            organization=org,
-                            machine=machine)
-    sensor.save()
-<<<<<<< HEAD
-<<<<<<< HEAD
-    return sensor.to_json()
 
-=======
+# @app.route("/test")
+# def test():
+#     org = models.Organization(organization_name="husky",
+#                               organization_address="St. Johns")
+#     machine = models.Machine(
+#         machine_name = "apple",
+#         organization_name = "husky",
+#         total_sensor_count = 0
+#     )
+#     sensor = models.Sensor(
+#                             sensor_name="test_6",
+#                             sensor_status=models.SensorStatus.ONLINE,
+#                             organization=org,
+#                             machine=machine)
+#     sensor.save()
+
     # return sensor.to_json()
->>>>>>> update
-=======
-    return sensor.to_json()
->>>>>>> Implemented API endpoint
-
-=======
->>>>>>> Added more endpoint to swagger file
-=======
 @app.route("/test")
 def test():
     org = models.Organization(organization_name="husky",
@@ -71,14 +55,6 @@ def test():
     sensor.save()
     return sensor.to_json()
 
->>>>>>> update
 if __name__ == '__main__':
-    app.run(port=8822, debug = True)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+    app.run(port=8822)
 
-
->>>>>>> modified swagger file
-=======
->>>>>>> Implemented API endpoint
