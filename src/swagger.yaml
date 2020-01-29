@@ -3,39 +3,33 @@ info:
   description: Sensor monitor services for V.A.P.E
   title: V.A.P.E Sensor Inventory
   version: 0.0.1 snapshot
-host: localhost:8822
+host: sensor.vibraneur.com
 basePath: /inventory/v1
 schemes:
   - http
   - https
 paths:
-  '/org/{org_name}/machine/{machine_name}/sensors':
+  '/{org_name}/sensors/count':
     get:
       tags:
-        - List all sensors (list all status by default)
-      summary: List all sensors
+        - Query statistics of all sensors
+      summary: List statistics of all sensors including counts
       x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_all_sensors_machine
+      operationId: get_sensors_count
       produces:
         - application/json
-
       parameters:
         - in: path
           name: org_name
           required: true
           type: string
-          description: The name of the orgnization owning the machine
-        - in: path
-          name: machine_name
-          required: true
-          type: string
-          description: The name of the machine
+          description: The name of the orgnization
 
       responses:
         '200':
           description: Successful operation
           schema:
-            $ref: '#/definitions/SensorList'
+            $ref: '#/definitions/SensorCount'
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -52,13 +46,13 @@ paths:
           schema:
             $ref: '#/definitions/Exception'
 
-  '/org/{org_name}/sensors':
+  '/{org_name}/sensors':
     get:
       tags:
-        - List all sensors (list all status by default)
-      summary: List all sensors
+        - Query sensors summary (list all status by default)
+      summary: List all summary of all sensors
       x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_all_sensors
+      operationId: get_sensors_summary
       produces:
         - application/json
       parameters:
@@ -66,7 +60,7 @@ paths:
           name: org_name
           required: true
           type: string
-          description: The name of the orgnization owning the machine
+          description: The name of the orgnization
         - in: query
           name: status
           enum:
@@ -82,7 +76,7 @@ paths:
         '200':
           description: Successful operation
           schema:
-            $ref: '#/definitions/SensorList'
+            $ref: '#/definitions/SensorSummaryList'
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -99,7 +93,7 @@ paths:
           schema:
             $ref: '#/definitions/Exception'
 
-  '/org/{org_name}/machine/{machine_name}/sensors/{sensor_id}':
+  '/sensor':
     get:
       tags:
         - Query detail of a sensor
@@ -110,18 +104,8 @@ paths:
         - application/json
 
       parameters:
-        - in: path
-          name: org_name
-          required: true
-          type: string
-          description: The name of the orgnization owning the machine
-        - in: path
-          name: machine_name
-          required: true
-          type: string
-          description: The name of the machine
-        - in: path
-          name: sensor_id
+        - in: query
+          name: id
           required: true
           type: string
           description: The id of the sensor
@@ -148,7 +132,20 @@ paths:
             $ref: '#/definitions/Exception'
 definitions:
 
-  SensorList:
+  SensorCount:
+    type: object
+    description: sensor counts infomation
+    properties:
+      total:
+        type: number
+      online:
+        type: number
+      offline:
+        type: number
+      decommissioned:
+        type: number
+
+  SensorSummaryList:
     type: object
     description: A list of sensor summaries
     properties:
@@ -183,7 +180,7 @@ definitions:
       machineInfo:
         description: The machine which this sensor is installed on
         allOf: [$ref: '#/definitions/MachineSummary']
-  
+
   MachineSummary:
     type: object
     properties:
@@ -211,6 +208,7 @@ definitions:
       - DECOMMISSIONED
       - OFFLINE
       - ALL
+
   BadRequestException:
     type: object
     properties:
