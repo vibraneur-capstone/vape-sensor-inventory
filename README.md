@@ -4,6 +4,12 @@
 This micro-service is powered by *Flask* with *connexion* which auto handles all HTTP request mapping       
 For details refer to `swagger.yaml`
 
+## Release Note (Feb 2, 2020)
+1. Refactored code structure to follow best practices including the use of `facade`, and `DTO` mapper, to improve code readability and maintainability.   
+2. Previous Violations to Swagger contract have all been resolved.
+3. Enabled `response validation` in Flask App to ensure developer maintain the integrity of swagger
+4. TODO items: refer to [TODO section](#todo-fed-2-2019)
+
 ## Setup
 > Install `pip`     
 > Make sure to have python3     
@@ -16,34 +22,20 @@ For details refer to `swagger.yaml`
 >      
 >After virtual env is set up, run `./scripts/run_server.sh` will boot up the server on localhost:8822       
 
-
 ## API Endpoints
-*Replace value in { } with real value*
 
-### Get Swagger UI in Browser
-> type in browser `http://localhost:8822/inventory/v1/ui`     
-### Query detail of a sensor
-> GET: `http://localhost:8822/inventory/v1/org/{organization_name}/machine/{machine_name}/sensors/{sensor_id}` 
-### Query a list of sensors for a specified machine   
-> GET: `http://localhost:8822/inventory/v1/org/{organization_name/machine/{machine_name}/sensors`
-### Query a list of sensors for a specified organization
-> GET `http://localhost:8822/inventory/v1/org/{organization_name}/sensors?status={sensor_status}`
-## Update (Jan. 26th)
+### Note: API testing should strictly be based on swagger file, NOT any source of documentation     
 
-Swagger file created for 1-4 requirements       
-```
-1. Ability to query a list of installed sensors 
-2. Ability to query the status of each sensor
-3. Ability to query information about a sensor
-4. Query the total number of sensors
-```
-Two endpoints, both `GET`
+### Use swagger file to examine Endpoint structure [click here for swagger editor](https://editor.swagger.io/)
+> Note: To try it out in Dev environment using swagger editor, update the `host` to `host: sensor.vibraneur.com` and `schemes` to `HTTPS`. To try it out in Local environemnt using editor, udpate the `host` to your `loopback address` and `schemes` to `HTTP`, NOT `HTTPS`.
+> Dev envirinment will NOT redirect HTTP call to HTTPS. It is developer's repsponsibility to ensure usage of HTTPS calls
 
-## TODO (Jan 26th)
+## TODO (Fed 2, 2019)
 
 1. ~~Bootstrap Flask (in progress) (Done)~~
 2. ~~Database provision (done)~~         
-3. Team meeting
+3. ~~Team meeting~~
+4. Unit Test (Long overdue)...
 
 ## Swagger
 

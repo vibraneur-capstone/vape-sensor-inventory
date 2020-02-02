@@ -184,9 +184,6 @@ definitions:
   MachineSummary:
     type: object
     properties:
-      id:
-        type: string
-        description: The id associated with machine
       location:
         type: string
         description: The location
