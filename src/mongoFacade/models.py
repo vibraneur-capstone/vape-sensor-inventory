@@ -34,3 +34,4 @@ class Sensor(Document):
     machine = EmbeddedDocumentField(Machine, required=False)
     sensor_install_time = DateField(required=False)
     sensor_status = StringField(required=True, max_length=50)
+    sensor_tags = DictField(required=True, default={})

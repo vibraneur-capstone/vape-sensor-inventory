@@ -6,8 +6,8 @@ info:
 host: sensor.vibraneur.com
 basePath: /inventory/v1
 schemes:
-  - http
   - https
+  - http
 paths:
   '/{org_name}/sensors/count':
     get:
@@ -130,6 +130,54 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/Exception'
+    patch: 
+      tags: 
+        - Add customized tags to a sensor
+      summary: add customized tags to a sensor
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: patch_sensor_tags
+      produces: 
+        - application/json
+        
+      parameters:
+        - in: query
+          name: id
+          required: true
+          type: string
+          description: The id of the sensor
+          
+        - in: body
+          name: tags
+          description: k/v pairs
+          required: true
+          schema:
+            type: object
+            properties:
+              tags:
+                type: object
+                additionalProperties:
+                  type: string
+          
+      responses:
+              '200':
+                description: Successful operation
+                schema:
+                  $ref: '#/definitions/SensorDetail'
+                headers:
+                  Access-Control-Allow-Origin:
+                    type: string
+              '400':
+                description: Bad Request
+                schema:
+                  $ref: '#/definitions/BadRequestException'
+              '404':
+                description: Not Found
+                schema:
+                  $ref: '#/definitions/Exception'
+              '500':
+                description: Server Error
+                schema:
+                  $ref: '#/definitions/Exception'
 definitions:
 
   SensorCount:
@@ -165,7 +213,17 @@ definitions:
         description: The id of sensor
       status:
         $ref: '#/definitions/SensorStatus'
-
+      tags:
+        type: object
+        additionalProperties:
+          type: string
+        example: {
+          any_key: any_value,
+          name: i am name,
+          id: id given by customer,
+          owner: given by customer,
+        }
+        
   SensorDetail:
     type: object
     description: Details of a sensor

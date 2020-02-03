@@ -12,10 +12,8 @@ def to_sensor_count(sensors):
 
 
 def to_sensor_summary_list(sensor_query_set):
-    sensor_summary_list = []
     sensor_query_json = json.loads(sensor_query_set.to_json())
-    for sensor in sensor_query_json:
-        sensor_summary_list.append(to_sensor_summary(sensor))
+    sensor_summary_list = list(map(to_sensor_summary, sensor_query_json))
     return {
         "sensors": sensor_summary_list,
         "count": len(sensor_summary_list)
@@ -28,6 +26,7 @@ def to_sensor_detail(sensor):
         "id": sensor_json["_id"]["$oid"],
         "status": sensor_json["sensor_status"],
         "name": sensor_json["sensor_name"],
+        "tags": sensor["sensor_tags"],
         "machineInfo": to_machine_summary(sensor_json["machine"])
     }
 
@@ -43,7 +42,8 @@ def to_machine_summary(machine):
 def to_sensor_summary(sensor):
     return {
         "id": sensor["_id"]["$oid"],
-        "status": sensor["sensor_status"]
+        "status": sensor["sensor_status"],
+        "tags": sensor["sensor_tags"]
     }
 
 

@@ -7,7 +7,7 @@ def get_sensors_by_org_name_and_status(org_name, status):
         sensors = Sensor.objects(organization__organization_name=org_name)
     else:
         sensors = Sensor.objects(organization__organization_name=org_name, sensor_status=status)
-    return sensors.values_list('sensor_id', 'sensor_status')
+    return sensors.values_list('sensor_id', 'sensor_status', 'sensor_tags')
 
 
 def get_sensor_by_id(id):
@@ -16,3 +16,10 @@ def get_sensor_by_id(id):
 
 def get_all_sensors_by_org_name(org_name):
     return Sensor.objects(organization__organization_name=org_name)
+
+
+def update_sensor_tags(sensor_id, tags):
+    sensor = get_sensor_by_id(sensor_id)
+    sensor.sensor_tags.update(tags)
+    sensor.save()
+    return sensor

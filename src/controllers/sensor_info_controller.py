@@ -1,5 +1,3 @@
-import logging
-
 from mapper import swagger_mapper as mapper
 from mongoFacade import sensor_info as facade
 
@@ -22,3 +20,9 @@ def get_sensor_detail(id):
     sensor_detail = facade.get_sensor_by_id(id)
     sensor_detail = mapper.to_sensor_detail(sensor_detail)
     return sensor_detail, 200, HEADER
+
+
+def patch_sensor_tags(id, tags):
+    sensor = facade.update_sensor_tags(id, tags)
+    sensor = mapper.to_sensor_detail(sensor)
+    return sensor, 200, HEADER
