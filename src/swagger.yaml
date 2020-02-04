@@ -9,13 +9,13 @@ schemes:
   - https
   - http
 paths:
-  '/{org_name}/sensors/count':
+  '/{org_name}/bearing/count':
     get:
       tags:
-        - Query statistics of all sensors
+        - Query alert statistics of all bearing
       summary: List statistics of all sensors including counts
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_sensors_count
+      x-swagger-router-controller: controllers.bearing_info_controller
+      operationId: get_bearing_count
       produces:
         - application/json
       parameters:
@@ -29,7 +29,7 @@ paths:
         '200':
           description: Successful operation
           schema:
-            $ref: '#/definitions/SensorCount'
+            $ref: '#/definitions/BearingCount'
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -46,13 +46,13 @@ paths:
           schema:
             $ref: '#/definitions/Exception'
 
-  '/{org_name}/sensors':
+  '/{org_name}/bearings':
     get:
       tags:
-        - Query sensors summary (list all status by default)
-      summary: List all summary of all sensors
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_sensors_summary
+        - Query list of beaing summary
+      summary: List all summary of all bearnings
+      x-swagger-router-controller: controllers.bearing_info_controller
+      operationId: get_bearing_summary
       produces:
         - application/json
       parameters:
@@ -64,19 +64,19 @@ paths:
         - in: query
           name: status
           enum:
-            - ONLINE
-            - DECOMMISSIONED
-            - OFFLINE
             - ALL
+            - ALARM
+            - OK
+            - INSUFFICIENT_DATA
           required: false
           type: string
-          description: The status of sensors to include in the response
+          description: The status of bearings to include in the response
 
       responses:
         '200':
           description: Successful operation
           schema:
-            $ref: '#/definitions/SensorSummaryList'
+            $ref: '#/definitions/BearingSummaryList'
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -93,13 +93,13 @@ paths:
           schema:
             $ref: '#/definitions/Exception'
 
-  '/sensor':
+  '/bearing':
     get:
       tags:
-        - Query detail of a sensor
-      summary: Detail of a sensor
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: get_sensor_detail
+        - Query detail of a bearing
+      summary: Detail of a bearing
+      x-swagger-router-controller: controllers.bearing_info_controller
+      operationId: get_bearing_detail
       produces:
         - application/json
 
@@ -108,13 +108,13 @@ paths:
           name: id
           required: true
           type: string
-          description: The id of the sensor
+          description: The id of the bearing
 
       responses:
         '200':
           description: Successful operation
           schema:
-            $ref: '#/definitions/SensorDetail'
+            $ref: '#/definitions/BearingDetail'
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -130,39 +130,34 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/Exception'
-    patch: 
-      tags: 
-        - Add customized tags to a sensor
-      summary: add customized tags to a sensor
-      x-swagger-router-controller: controllers.sensor_info_controller
-      operationId: patch_sensor_tags
-      produces: 
+    patch:
+      tags:
+        - Add customized tags to a bearing
+      summary: add customized tags to a bearing
+      x-swagger-router-controller: controllers.bearing_info_controller
+      operationId: patch_bearing_tags
+      produces:
         - application/json
-        
+
       parameters:
         - in: query
           name: id
           required: true
           type: string
-          description: The id of the sensor
-          
+          description: The id of the bearing
+
         - in: body
           name: tags
           description: k/v pairs
           required: true
           schema:
-            type: object
-            properties:
-              tags:
-                type: object
-                additionalProperties:
-                  type: string
-          
+            $ref: '#/definitions/Tags'
+
       responses:
               '200':
                 description: Successful operation
                 schema:
-                  $ref: '#/definitions/SensorDetail'
+                  $ref: '#/definitions/BearingDetail'
                 headers:
                   Access-Control-Allow-Origin:
                     type: string
@@ -180,64 +175,71 @@ paths:
                   $ref: '#/definitions/Exception'
 definitions:
 
-  SensorCount:
+  BearingCount:
     type: object
-    description: sensor counts infomation
+    description: bearing counts infomation
     properties:
       total:
         type: number
-      online:
+      ok:
         type: number
-      offline:
+      alarm:
         type: number
-      decommissioned:
+      insufficientData:
         type: number
 
-  SensorSummaryList:
+  BearingSummaryList:
     type: object
     description: A list of sensor summaries
     properties:
-      sensorList:
+      bearingList:
         type: array
         items:
-          $ref: '#/definitions/SensorSummary'
+          $ref: '#/definitions/BearingSummary'
       count:
         type: number
 
-  SensorSummary:
+  BearingSummary:
     type: object
-    description: A snapshot of sensor information
+    description: A snapshot of bearing information
     properties:
       id:
         type: string
-        description: The id of sensor
+        description: The id of bearing
       status:
-        $ref: '#/definitions/SensorStatus'
-      tags:
-        type: object
-        additionalProperties:
+        $ref: '#/definitions/BearingStatus'
+      sensorsId:
+        type: array
+        items:
           type: string
-        example: {
-          any_key: any_value,
-          name: i am name,
-          id: id given by customer,
-          owner: given by customer,
-        }
-        
-  SensorDetail:
+      tags:
+        allOf: [$ref: '#/definitions/Tags']
+
+  BearingDetail:
     type: object
     description: Details of a sensor
-    allOf: [$ref: '#/definitions/SensorSummary']
+    allOf: [$ref: '#/definitions/BearingSummary']
     properties:
-      name:
-        type: string
-        description: Name of the sensor
-      id:
-        type: string
-        description: Sensor id
       machineInfo:
         description: The machine which this sensor is installed on
         allOf: [$ref: '#/definitions/MachineSummary']
+      sensors:
+        type: array
+        items:
+          $ref: '#/definitions/SensorSummary'
+
+  SensorSummary:
+    type: object
+    properties:
+      id:
+        type: string
+      status:
+        $ref: '#/definitions/SensorStatus'
+      tags:
+        allOf: [$ref: '#/definitions/Tags']
+      installTime:
+        type: string
+        example: "2017-08-11-09-12-03"
 
   MachineSummary:
     type: object
@@ -249,11 +251,14 @@ definitions:
         type: string
         description: User customized name
       alertStatus:
-        type: string
-        enum:
-          - ALARM
-          - OK
-          - INSUFFICIENT_DATA
+        $ref: '#/definitions/BearingStatus'
+
+  BearingStatus:
+    type: string
+    enum:
+      - ALARM
+      - OK
+      - INSUFFICIENT_DATA
 
   SensorStatus:
     type: string
@@ -263,6 +268,17 @@ definitions:
       - DECOMMISSIONED
       - OFFLINE
       - ALL
+
+  Tags:
+    type: object
+    additionalProperties:
+      type: string
+    example: {
+      any_key: any_value,
+      name: i am name,
+      id: id given by customer,
+      owner: given by customer,
+    }
 
   BadRequestException:
     type: object
