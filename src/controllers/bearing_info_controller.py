@@ -14,7 +14,7 @@ def get_bearing_summary(org_name, status):
 
 def get_bearing_count(org_name):
     bearing = facade.get_all_bearings_by_org_name(org_name)
-    bearing_count = to_sensor_count(bearing)
+    bearing_count = to_bearing_count(bearing)
     return bearing_count, 200, HEADER
 
 
