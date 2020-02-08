@@ -68,6 +68,7 @@ paths:
             - ALARM
             - OK
             - INSUFFICIENT_DATA
+            - DISCONTINUED
           required: false
           type: string
           description: The status of bearings to include in the response
@@ -130,6 +131,28 @@ paths:
           description: Server Error
           schema:
             $ref: '#/definitions/Exception'
+    post:
+      tags:
+        - Add a new bearing
+      summary: Add a new bearing
+      x-swagger-router-controller: controllers.bearing_info_controller
+      operationId: post_new_bearing
+      produces:
+        - application/json
+      consumes:
+      - "application/json"
+  
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Name of the orgnization to which the bearing belongs to"
+        required: true
+        schema:
+          $ref: "#/definitions/BearingDetail"
+      responses:
+        405:
+          description: "Invalid input"
+
     patch:
       tags:
         - Add customized tags to a bearing
@@ -173,8 +196,54 @@ paths:
                 description: Server Error
                 schema:
                   $ref: '#/definitions/Exception'
-definitions:
+  
+  '/bearing/addSensor':
+    patch:
+      tags:
+        - Add new sensors to a bearing
+      summary: Add new sensors to a bearing
+      x-swagger-router-controller: controllers.bearing_info_controller
+      operationId: attach_sensor_to_bearing
+      produces:
+        - application/json
 
+      parameters:
+        - in: query
+          name: id
+          required: true
+          type: string
+          description: The id of the bearing
+
+        - in: body
+          name: sensor_id
+          description: Sensor id
+          required: true
+          schema:
+            $ref: '#/definitions/SensorId'
+
+      responses:
+              '200':
+                description: Successful operation
+                schema:
+                  $ref: '#/definitions/BearingDetail'
+                headers:
+                  Access-Control-Allow-Origin:
+                    type: string
+              '400':
+                description: Bad Request
+                schema:
+                  $ref: '#/definitions/BadRequestException'
+              '404':
+                description: Not Found
+                schema:
+                  $ref: '#/definitions/Exception'
+              '500':
+                description: Server Error
+                schema:
+                  $ref: '#/definitions/Exception'
+  
+ 
+definitions:
   BearingCount:
     type: object
     description: bearing counts infomation
@@ -259,6 +328,7 @@ definitions:
       - ALARM
       - OK
       - INSUFFICIENT_DATA
+      - DISCONTINUED
 
   SensorStatus:
     type: string
@@ -268,6 +338,8 @@ definitions:
       - DECOMMISSIONED
       - OFFLINE
       - ALL
+  SensorId:
+    type: string
 
   Tags:
     type: object
