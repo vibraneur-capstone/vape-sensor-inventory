@@ -17,7 +17,6 @@ def get_bearing_count(org_name):
     bearing_count = to_bearing_count(bearing)
     return bearing_count, 200, HEADER
 
-
 def get_bearing_detail(id):
     bearing_detail = facade.get_bearing_by_id(id)
     bearing_detail = to_bearing_detail(bearing_detail)
@@ -26,5 +25,15 @@ def get_bearing_detail(id):
 
 def patch_bearing_tags(id, tags):
     bearing = facade.update_bearing_tags(id, tags)
+    bearing = to_bearing_detail(bearing)
+    return bearing, 200, HEADER
+
+def post_new_bearing(org_name, tags, sensors_list_id):
+    bearing = facade.create_new_bearing(org_name,tags, sensors_list_id)
+    bearing = to_bearing_detail(bearing)
+    return bearing, 200, HEADER
+
+def attach_sensor_to_bearing(id, sensor_id):
+    bearing = facade.add_sensor_id_to_bearing(id, sensor_id)
     bearing = to_bearing_detail(bearing)
     return bearing, 200, HEADER

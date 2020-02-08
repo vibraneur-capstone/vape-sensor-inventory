@@ -13,6 +13,7 @@ class AlertStatus(str, Enum):
     ALARM = "ALARM"
     OK = "OK"
     INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
+    DISCONTINUED = "DISCONTINUED"
     ALL = "ALL"
 
 
