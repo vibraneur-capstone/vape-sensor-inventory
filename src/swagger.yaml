@@ -148,10 +148,27 @@ paths:
         description: "Name of the orgnization to which the bearing belongs to"
         required: true
         schema:
-          $ref: "#/definitions/BearingDetail"
+          $ref: "#/definitions/PostBearing"
       responses:
-        405:
-          description: "Invalid input"
+              '200':
+                description: Successful operation
+                schema:
+                  $ref: '#/definitions/BearingDetail'
+                headers:
+                  Access-Control-Allow-Origin:
+                    type: string
+              '400':
+                description: Bad Request
+                schema:
+                  $ref: '#/definitions/BadRequestException'
+              '404':
+                description: Not Found
+                schema:
+                  $ref: '#/definitions/Exception'
+              '500':
+                description: Server Error
+                schema:
+                  $ref: '#/definitions/Exception'
 
     patch:
       tags:
@@ -200,7 +217,7 @@ paths:
   '/bearing/addSensor':
     patch:
       tags:
-        - Add new sensors to a bearing
+        - Attach sensors to a bearing
       summary: Add new sensors to a bearing
       x-swagger-router-controller: controllers.bearing_info_controller
       operationId: attach_sensor_to_bearing
@@ -208,19 +225,18 @@ paths:
         - application/json
 
       parameters:
+
         - in: query
-          name: id
-          required: true
+          name: bearing_id
+          description: bearing id
           type: string
-          description: The id of the bearing
-
-        - in: body
-          name: sensor_id
-          description: Sensor id
           required: true
-          schema:
-            $ref: '#/definitions/SensorId'
-
+        - in: query
+          name: sensor_id
+          description: sensor id
+          type: string
+          required: true
+         
       responses:
               '200':
                 description: Successful operation
@@ -241,6 +257,48 @@ paths:
                 description: Server Error
                 schema:
                   $ref: '#/definitions/Exception'
+  '/sensor':
+    post:
+      tags:
+        - Add a new sensor
+      summary: Add a new sensor
+      x-swagger-router-controller: controllers.sensor_info_controller
+      operationId: post_new_sensor
+      produces:
+        - application/json
+      consumes:
+      - "application/json"
+  
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Name of the orgnization to which the bearing belongs to"
+        required: true
+        schema:
+          $ref: "#/definitions/PostSensor"
+
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/SensorSummary'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestException'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Exception'
+        '500':
+          description: Server Error
+          schema:
+            $ref: '#/definitions/Exception'
+        '405':
+          description: "Invalid input"
   
  
 definitions:
@@ -338,9 +396,7 @@ definitions:
       - DECOMMISSIONED
       - OFFLINE
       - ALL
-  SensorId:
-    type: string
-
+  
   Tags:
     type: object
     additionalProperties:
@@ -351,7 +407,26 @@ definitions:
       id: id given by customer,
       owner: given by customer,
     }
+    
+  PostBearing:
+    type: object
+    properties:
+      tags:
+        allOf: [$ref: '#/definitions/Tags']
+      sensorId:
+        type: array
+        items:
+          type: string
+        example: ["5e35e369d956e2dad90fbfda", "6e35e369d956e3dad90fbfda"]
 
+  PostSensor:
+    type: object
+    properties:
+      tags:
+        allOf: [$ref: '#/definitions/Tags']
+      sensor_status:
+        $ref: '#/definitions/SensorStatus'
+        
   BadRequestException:
     type: object
     properties:

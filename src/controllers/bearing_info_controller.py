@@ -22,18 +22,24 @@ def get_bearing_detail(id):
     bearing_detail = to_bearing_detail(bearing_detail)
     return bearing_detail, 200, HEADER
 
-
 def patch_bearing_tags(id, tags):
     bearing = facade.update_bearing_tags(id, tags)
     bearing = to_bearing_detail(bearing)
     return bearing, 200, HEADER
 
-def post_new_bearing(org_name, tags, sensors_list_id):
-    bearing = facade.create_new_bearing(org_name,tags, sensors_list_id)
+def post_new_bearing(body):
+    org_name = "Husky"
+    tags = body["tags"]
+    sensors_list_id = body["sensorId"]
+    bearing = facade.create_new_bearing(org_name, tags, sensors_list_id)
     bearing = to_bearing_detail(bearing)
     return bearing, 200, HEADER
 
-def attach_sensor_to_bearing(id, sensor_id):
-    bearing = facade.add_sensor_id_to_bearing(id, sensor_id)
+def attach_sensor_to_bearing(bearing_id, sensor_id):
+    bearing = facade.add_sensor_id_to_bearing(bearing_id, sensor_id)
     bearing = to_bearing_detail(bearing)
     return bearing, 200, HEADER
+
+
+    
+

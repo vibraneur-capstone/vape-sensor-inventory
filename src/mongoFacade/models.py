@@ -40,6 +40,6 @@ class Bearing(Document):
     organization = EmbeddedDocumentField(Organization, required=False)
     bearing_tags = DictField(required=True, default={})
     alert_status = StringField(required=True, max_length=50, default=AlertStatus.INSUFFICIENT_DATA)
-    sensors_id_list = ListField(required=True, default=[])
+    sensors_id_list = ListField(required=False, default=[])
 
 

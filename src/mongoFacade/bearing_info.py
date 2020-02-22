@@ -44,3 +44,6 @@ def create_new_bearing(org_name,tags, sensors_id_list):
     bearing = Bearing(machine = machine, organization = organization, sensors_id_list = sensors_id_list, bearing_tags = tags, alert_status = alert_status)
     bearing.save()
     return bearing
+
+
+
