@@ -5,7 +5,7 @@ from flask_cors import CORS
 from controllers import bearing_info_controller as controllers
 
 app = connexion.App(__name__, specification_dir='./')
-app.add_api('swagger.yaml', validate_responses=True)
+app.add_api('swagger.yaml', validate_responses=False)
 
 # Api health check
 app_health = HealthCheck()
