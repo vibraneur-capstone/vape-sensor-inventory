@@ -11,7 +11,7 @@ phases:
       - DB_URI=$DBURI
       - cd src/repositories
       - echo Inserting databse connection uri
-      - sed -i 's|DB-CONNECTION|$DB_URI|g' mongo_config.py
+      - sed -i "s|DB-CONNECTION|$DB_URI|g" mongo_config.py
       - echo Done
       - cd ../..
   build:
