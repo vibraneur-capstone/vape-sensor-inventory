@@ -10,7 +10,7 @@ phases:
       - echo Insert credentials
       - cd src/repositories
       - echo Inserting databse connection uri
-      - sed -i 's|DB-CONNECTION|$DBURI|g' mongo_config.py
+      - sed -i 's|DB-CONNECTION|"$DBURI"|g' mongo_config.py
       - echo Done
       - cd ../..
   build:
