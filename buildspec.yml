@@ -9,7 +9,7 @@ phases:
     commands:
       - echo Insert credentials
       - cd src/repositories
-      - Inserting databse connection uri
+      - echo Inserting databse connection uri
       - sed -i "" 's|DB-CONNECTION|$DBURI|g' mongo_config.py
       - echo Done
       - cd ../..
