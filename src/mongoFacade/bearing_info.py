@@ -19,13 +19,13 @@ def get_bearing_by_id(id):
     try:
         return Bearing.objects.get(id=id)
     except Bearing.DoesNotExist:
-        return None, 400, HEADER
+        return None
 
 def get_all_bearings_by_org_name(org_name):
     try:
         return Bearing.objects(organization__organization_name=org_name)
     except Bearing.DoesNotExist:
-        return None, 400, HEADER
+        return None
 
 def update_bearing_tags(bearing_id, tags):
     bearing = get_bearing_by_id(bearing_id)
@@ -37,7 +37,7 @@ def get_sensor_by_id(id):
     try:
         return Sensor.objects.get(id=id)
     except Sensor.DoesNotExist:
-        return None, 400, HEADER
+        return None
 
 def add_sensor_id_to_bearing(bearing_id,sensor_id):
     bearing = get_bearing_by_id(bearing_id)
