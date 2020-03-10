@@ -2,8 +2,7 @@ from mongoFacade import bearing_info as facade
 from mapper.bearing_detail_mapper import to_bearing_detail
 from mapper.bearing_count_mapper import to_bearing_count
 from mapper.bearing_summary_mapper import to_bearing_summary_list
-
-HEADER = {"Access-Control-Allow-Origin": "*"}
+from controllers.controller_config import HEADER
 
 
 def get_bearing_summary(org_name, status):
