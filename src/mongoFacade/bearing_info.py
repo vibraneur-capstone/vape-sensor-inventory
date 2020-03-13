@@ -42,6 +42,8 @@ def get_sensor_by_id(id):
 def add_sensor_id_to_bearing(bearing_id,sensor_id):
     bearing = get_bearing_by_id(bearing_id)
     bearing.sensors_id_list.append(sensor_id)
+    sensor_id_set = set(bearing.sensors_id_list)
+    bearing.sensors_id_list = list(sensor_id_set)
     bearing.save()
     return bearing
 

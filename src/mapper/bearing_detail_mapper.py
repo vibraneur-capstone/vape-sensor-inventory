@@ -3,15 +3,13 @@ from mapper.machine_summary_mapper import to_machine_summary
 from mongoFacade.models import Bearing
 from controllers.controller_config import HEADER
 
+
 def to_bearing_detail(bearing):
-    try:
-        return {
-            "id": str(bearing.id),
-            "status": bearing.alert_status,
-            "tags": bearing.bearing_tags,
-            "sensorsId": bearing.sensors_id_list,
-            "sensors": to_sensor_list(bearing.sensors_id_list),
-            "machineInfo": to_machine_summary(bearing.machine)
-        }
-    except AttributeError:
-        return None, 400, HEADER
+    return {
+        "id": str(bearing.id),
+        "status": bearing.alert_status,
+        "tags": bearing.bearing_tags,
+        "sensorsId": bearing.sensors_id_list,
+        "sensors": to_sensor_list(bearing.sensors_id_list),
+        "machineInfo": to_machine_summary(bearing.machine)
+    }

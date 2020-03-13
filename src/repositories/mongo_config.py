@@ -1,6 +1,6 @@
 import ssl
 
-MONGO_CONNECTION_STRING = "DB-CONNECTION"
+MONGO_CONNECTION_STRING = "mongodb://localhost:27017/inventory"
 DATABASE_NAME = "inventory"
 MONGO_CERT = ssl.CERT_NONE
-HEADER = {"Access-Control-Allow-Origin": "*"}
+SSL = MONGO_CONNECTION_STRING.find("localhost") == -1

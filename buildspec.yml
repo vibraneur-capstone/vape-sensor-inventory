@@ -10,7 +10,7 @@ phases:
       - echo Insert credentials
       - cd src/repositories
       - echo Inserting databse connection uri
-      - sed -i "s|DB-CONNECTION|$DBURI|g" mongo_config.py
+      - sed -i "s|mongodb://localhost:27017/inventory|$DBURI|g" mongo_config.py
       - echo Done
       - cd ../..
   build:
@@ -21,7 +21,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - version=0.0.3
+      - version=0.0.4
       - artifact_name=sensor-inventory-dist
       - cp ./"$artifact_name".zip ./$artifact_name-$version.zip
 
